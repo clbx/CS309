@@ -22,3 +22,12 @@ SELECT CUS_LNAME,CUS_FNAME,CUS_INITIAL FROM customer WHERE CUS_CODE IN (SELECT C
 SELECT * FROM invoice ORDER BY INV_DATE DESC;
 /* Practice 4.2 */
 SELECT P_DESCRIPT,P_CODE,P_INDATE,P_PRICE FROM product WHERE (P_INDATE < "2018-1-1") AND (P_PRICE < 50) ORDER BY V_CODE, P_PRICE DESC;
+
+/* Practice 5.1 */
+SELECT MIN(P_INDATE) FROM PRODUCT;  
+/* Practice 5.2 */
+SELECT MAX(P_INDATE) FROM PRODUCT;
+/* Practice 5.3 */
+SELECT p_descript, (p_qoh * p_price) as "Inventory Value" 
+FROM product 
+WHERE (p_qoh * p_price = (SELECT max(p_qoh * p_price) from product ));
