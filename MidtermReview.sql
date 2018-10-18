@@ -1,4 +1,4 @@
-/* Practice 1.1 
+/* Practice 1.1
 Create a table vendor with the following information. */
 CREATE TABLE v (
     V_CODE int PRIMARY KEY,
@@ -7,7 +7,7 @@ CREATE TABLE v (
     V_AREACODE varchar(3),
     V_PHONE varchar(8),
     V_STATE varchar(2),
-    V_ORDER varchar(1) 
+    V_ORDER varchar(1)
 )
 
 INSERT INTO v(V_CODE, V_NAME, V_CONTACT,V_AREACODE,V_PHONE,V_STATE,V_ORDER)
@@ -25,7 +25,7 @@ SOURCE /path/to/file/sale_data.sql
 
 /* Practice 1.3
 Find all the products provided by vendor 21344 */
-SELECT * 
+SELECT *
 FROM PRODUCT
 WHERE V_CODE = 21344
 ;
@@ -70,7 +70,7 @@ WHERE DATE_SUB(CURDATE(), INTERVAL 180 DAY) > INV_DATE
 
 
 /* Practice 2.1 (Practice 1)
-List vendors information (name, contact and phone) that are in the area ‘615’ 
+List vendors information (name, contact and phone) that are in the area ‘615’
 and have previous order */
 SELECT
     V_NAME,
@@ -83,7 +83,7 @@ AND V_ORDER = "Y"
 
 
 /* Practice 2.2 (Practice 1)
-List customers name (last name, first name and middle initial) who live in the area 
+List customers name (last name, first name and middle initial) who live in the area
 ‘615’ or have zero balance */
 SELECT
     CUS_LNAME,
@@ -95,13 +95,13 @@ OR CUS_BALANCE = 0
 ;
 
 /* Practice 2.3 (Practice 1)
-List products (all attributes) that either have excess inventory (units available (QOH) 
+List products (all attributes) that either have excess inventory (units available (QOH)
 is at least 50 more than minimum units) or have discount and stocking date was before 01/01/2018. */
 SELECT *
 FROM PRODUCT
 WHERE P_QOH > (P_MIN + 50)
 OR (
-    P_DISCOUNT > 0 
+    P_DISCOUNT > 0
     AND P_INDATE < "2016-01-01"
    )
 ;
@@ -122,7 +122,7 @@ WHERE P_DESCRIPT LIKE "%saw%"
 
 
 /* Practice 2.6 (Practice 2)
-Suppose that you want to find a vendor’s information, but you cannot remember 
+Suppose that you want to find a vendor’s information, but you cannot remember
 that the contact’s name is spelled ‘Orton’ or ‘Orten’. How can you do it? */
 SELECT *
 FROM VENDOR
@@ -130,7 +130,7 @@ WHERE V_CONTACT LIKE "Ort%n"
 ;
 
 /* Practice 2.7 (Practice 3)
-Find customers who have generated invoices, list their last name, 
+Find customers who have generated invoices, list their last name,
 first name and middle initial */
 SELECT
     CUS_LNAME,
@@ -138,7 +138,7 @@ SELECT
     CUS_INITIAL
 FROM CUSTOMER
 WHERE CUS_CODE IN (
-    SELECT CUS_CODE 
+    SELECT CUS_CODE
     FROM INVOICE
     )
 ;
@@ -152,9 +152,9 @@ ORDER BY INV_DATE
 
 
 /* Practice 2.9 (Practice 4)
-Find the products (description, vendor code, stocking date, price) which were 
-stocked before 2018-01-01 and have prices no more than $50.00. The contents 
-should be listed first by vendor code in ascending, and then by price in descending 
+Find the products (description, vendor code, stocking date, price) which were
+stocked before 2018-01-01 and have prices no more than $50.00. The contents
+should be listed first by vendor code in ascending, and then by price in descending
 within the vendor code. */
 SELECT
     P_DESCRIPT,
@@ -249,8 +249,8 @@ GROUP BY V_CODE
 ;
 
 /* Practice 4.4 (Practice 8)
-Find the invoices which have total purchase amount over $100. Show 
-the invoice number and its total purchase amount. List the contents  
+Find the invoices which have total purchase amount over $100. Show
+the invoice number and its total purchase amount. List the contents
 by total purchase amount in ascending. */
 SELECT
     INV_NUMBER,
@@ -279,8 +279,8 @@ WHERE CUSTOMER.CUS_CODE = INVOICE.CUS_CODE
 
 
 /* Practice 4.6 (Practice 9)
-For the customers who live in area ‘615’, find out their information and 
-the date they generated invoices. Show same attributes as the above query. 
+For the customers who live in area ‘615’, find out their information and
+the date they generated invoices. Show same attributes as the above query.
 List the records by their balance in descending. */
 SELECT
     CUSTOMER.CUS_CODE,
@@ -292,8 +292,8 @@ WHERE CUSTOMER.CUS_CODE = INVOICE.CUS_CODE
 ORDER BY CUSTOMER.CUS_BALANCE;
 ;
 
-/* Practice 4.7 (Practice 10) 
-Find the customers who ordered “saw” after ‘2016-01-15’. List the customer last name, 
+/* Practice 4.7 (Practice 10)
+Find the customers who ordered “saw” after ‘2016-01-15’. List the customer last name,
 customer first name, invoice number, invoice date and product description. */
 SELECT
     CUSTOMER.CUS_LNAME,
@@ -333,7 +333,7 @@ HAVING (SELECT Count(PRODUCT.V_CODE) > 2 FROM PRODUCT)
 ;
 
 /* Practice 5.3 (Practice 12)
-For the vendors who have more than 2 products, list its code, name and 
+For the vendors who have more than 2 products, list its code, name and
 products description order by vendor code in ascending. */
 SELECT DISTINCT
     VENDOR.V_CODE,
@@ -345,7 +345,7 @@ ORDER BY VENDOR.V_CODE
 ;
 
 /* Practice 6.1 (Practice 1)
-List the customer code, last name, invoice number, invoice date 
+List the customer code, last name, invoice number, invoice date
 using natural join according to the order of customer code. */
 SELECT
     CUSTOMER.CUS_CODE,
@@ -358,7 +358,7 @@ ORDER BY CUSTOMER.CUS_CODE
 ;
 
 /* Practice 6.3 (Practice 1)
-List the invoice number, product code, product description, line units, 
+List the invoice number, product code, product description, line units,
 line price using natural join. The line price should be greater than 50. */
 SELECT
     INVOICE.INV_NUMBER,
@@ -373,8 +373,8 @@ AND LINE.LINE_PRICE > 50
 ;
 
 /* Practice 6.4 (Practice 2)
-List  invoice number, the customer code, the customer last  and first name, 
-the invoice date, and customer balance for all customers with a customer 
+List  invoice number, the customer code, the customer last  and first name,
+the invoice date, and customer balance for all customers with a customer
 balance of $500 or more using join on. */
 SELECT
     INVOICE.INV_NUMBER,
@@ -388,9 +388,37 @@ WHERE CUSTOMER.CUS_CODE = INVOICE.CUS_CODE
 AND CUSTOMER.CUS_BALANCE > 50
 ;
 
+/* Practice 6.5 (Practice 3) */
+
+SELECT
+  INVOICE.CUS_CODE,
+  Count(DISTINCT INVOICE.INV_NUMBER) AS "Number of Invoices",
+  Sum(LINE.LINE_UNITS * LINE.LINE_PRICE) AS "Total Customer Purchase"
+FROM INVOICE, LINE
+WHERE INVOICE.INV_NUMBER = LINE.INV_NUMBER
+GROUP BY INVOICE.CUS_CODE
+ORDER BY INVOICE.CUS_CODE
+;
+
+
+
 /* Practice 6.5 (Practice 4)
-Write a query to get the product code, the total sales by product, 
+Write a query to get the product code, the total sales by product,
 and the contribution by employee of each product’s sales. */
 
 SELECT
-    
+  P_CODE,
+  Sum(LINE_UNITS*LINE_PRICE) as SALES,
+  Sum(LINE_UNITS*LINE_PRICE)/(select count(*) from employee) as contrib
+FROM LINE
+GROUP BY P_CODE
+;
+
+SELECT
+  P_CODE,
+  Sum(LINE_UNITS * LINE_PRICE) as SALES,
+  (select count(*) from employee) as eccount,
+  sum(line_units * line_price)/(select count(*) from employee) as conrtib
+  from line
+  group by p_code
+  ;
